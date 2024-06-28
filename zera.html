@@ -10,19 +10,30 @@
 
         padding: 0;
         overflow: hidden;
-
+        
         align-items: center;
         justify-content: center;
-        height: 10vh;
-        background-position: center;
-        background-image: url("https://t4.ftcdn.net/jpg/04/92/22/93/360_F_492229389_5ve1bCKgYrLRHpCj3o4FAzz60efaZgG0.jpg") !important;
+        background-image: url("./photo_2024-06-28_02-58-02.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      .overly {
+        background: #0c1c2cc0;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 1;
       }
 
       #topSection {
         text-align: center;
         color: #fff;
         font-size: 34px;
-        margin-top: 20px;
+        padding-top: 20px;
+        z-index: 900;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0%);
       }
       #banner {
         position: fixed;
@@ -40,6 +51,7 @@
     </style>
   </head>
   <body>
+    <div class="overly"></div>
     <div id="topSection">تم تفعل هاك</div>
     <div id="banner">
       <span id="hours">01</span>:<span id="minutes">00</span>:<span id="seconds"
