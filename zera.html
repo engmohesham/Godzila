@@ -8,11 +8,12 @@
       body {
         margin: 0;
 
-        padding: 0;
         overflow: hidden;
-        
+        display: flex;
         align-items: center;
         justify-content: center;
+        height: 100vh;
+        background-position: center;
         background-image: url("./photo_2024-06-28_02-58-02.jpg");
         background-repeat: no-repeat;
         background-size: cover;
@@ -129,61 +130,46 @@
             var _0x58e23d = _0x5112;
             alert(_0x15022a[_0x58e23d(0xd1)]);
           };
-        let countdownEndTime;
 
-        // استعادة الوقت المتبقي من localStorage إذا كان موجودًا
-        if (localStorage.getItem("countdownEndTime")) {
-          countdownEndTime = new Date(localStorage.getItem("countdownEndTime"));
-        } else {
-          // تعيين الوقت النهائي للعد التنازلي (ساعة واحدة من الآن كمثال)
-          countdownEndTime = new Date();
-          countdownEndTime.setHours(countdownEndTime.getHours() + 1);
-          localStorage.setItem("countdownEndTime", countdownEndTime);
-        }
+          (function () {
+        let hours = 2, minutes = 0, seconds = 0;
 
         const hoursElement = document.getElementById("hours");
         const minutesElement = document.getElementById("minutes");
         const secondsElement = document.getElementById("seconds");
 
-        function updateDisplay(hours, minutes, seconds) {
+        function updateDisplay() {
           hoursElement.innerText = hours.toString().padStart(2, "0");
           minutesElement.innerText = minutes.toString().padStart(2, "0");
           secondsElement.innerText = seconds.toString().padStart(2, "0");
         }
 
-        function calculateRemainingTime() {
-          const now = new Date();
-          const timeDifference = countdownEndTime - now;
-
-          if (timeDifference <= 0) {
-            return { hours: 0, minutes: 0, seconds: 0 };
-          }
-
-          const hours = Math.floor(timeDifference / (1000 * 60 * 60));
-          const minutes = Math.floor(
-            (timeDifference % (1000 * 60 * 60)) / (1000 * 60)
-          );
-          const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-
-          return { hours, minutes, seconds };
-        }
-
         function countdown() {
-          const { hours, minutes, seconds } = calculateRemainingTime();
-
           if (hours === 0 && minutes === 0 && seconds === 0) {
             document.getElementById("message").style.display = "block";
             document.getElementById("banner").innerText = "الوقت انتهى";
             document.getElementById("alert").innerText = "لقد انتهى الوقت";
-            clearInterval(timerInterval); // إيقاف المؤقت عند الانتهاء
-            localStorage.removeItem("countdownEndTime"); // إزالة الوقت النهائي من التخزين المحلي
+            clearInterval(timerInterval);
           } else {
-            updateDisplay(hours, minutes, seconds);
+            if (seconds > 0) {
+              seconds--;
+            } else {
+              if (minutes > 0) {
+                minutes--;
+                seconds = 59;
+              } else if (hours > 0) {
+                hours--;
+                minutes = 59;
+                seconds = 59;
+              }
+            }
+            updateDisplay();
           }
         }
 
-        const timerInterval = setInterval(countdown, 1000); // تحديث كل ثانية
-        countdown(); // عرض الوقت الأولي عند تحميل الصفحة
+        const timerInterval = setInterval(countdown, 1000);
+        updateDisplay();
+      })();
 
         function _0x3ac136() {
           var _0x545398 = _0x12f66f;
